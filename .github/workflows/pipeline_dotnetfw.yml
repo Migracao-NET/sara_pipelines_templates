@@ -10,7 +10,15 @@ on:
         required: true
         type: string
         default: Release
-
+      solution:
+        required: true
+        type: string
+        default: '**/*.sln'
+      buildConfiguration:
+        required: true
+        type: string
+        default: Release
+  
 jobs:
   build:
     runs-on: windows-latest
