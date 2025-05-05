@@ -26,8 +26,8 @@ jobs:
         run: |
           msbuild /p:Configuration=Release /p:OutDir=${{ github.workspace }}/build-output
         
-      # - name: Run tests
-      #   run: |
-      #     vstest.console.exe **\*Test*.dll
-      #   env:
-      #     VSTEST_ADDITIONAL_ARGS: '--logger:trx'
+      - name: Run tests
+        run: |
+          vstest.console.exe **\*Test*.dll
+        env:
+          VSTEST_ADDITIONAL_ARGS: '--logger:trx'
