@@ -7,7 +7,7 @@ on:
         required: true
         type: string
       configuration:
-        required: false
+        required: true
         type: string
         default: Release
 
@@ -30,9 +30,9 @@ jobs:
 
       - name: Build solution
         run: msbuild ${{ inputs.solution }} /p:Configuration=${{ inputs.buildConfiguration }}
-
-      # - name: Run tests
-      #   run: |
-      #     vstest.console.exe **\*Test*.dll
-      #   env:
-      #     VSTEST_ADDITIONAL_ARGS: '--logger:trx'
+        
+      - name: Run tests
+        run: |
+          vstest.console.exe **\*Test*.dll
+        env:
+          VSTEST_ADDITIONAL_ARGS: '--logger:trx'
