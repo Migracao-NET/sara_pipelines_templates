@@ -11,7 +11,7 @@ on:
         type: string
         default: Release
       solution:
-        required: true
+        required: false
         type: string
         default: '**/*.sln'
       buildConfiguration:
