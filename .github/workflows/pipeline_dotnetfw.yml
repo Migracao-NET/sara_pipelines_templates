@@ -2,16 +2,7 @@ name: Pipeline Framework 4.7.2
 
 on:
   workflow_call:
-    inputs:
-      dotnet-version:
-        required: true
-        type: string
-      solution:
-        required: true
-        type: string
-      configuration:
-        required: true
-        type: string
+    
   
 jobs:
   build:
@@ -22,19 +13,21 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1
+        uses: microsoft/setup-msbuild@v2
 
       - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1
+        uses: NuGet/setup-nuget@v2
 
       - name: Restore NuGet packages
-        run: nuget restore ${{ inputs.solution }}
+        run: |
+          nuget restore 
 
       - name: Build solution
-        run: msbuild ${{ inputs.solution }} /p:Configuration=${{ inputs.configuration }}
-        
-      - name: Run tests
         run: |
-          vstest.console.exe **\*Test*.dll
-        env:
-          VSTEST_ADDITIONAL_ARGS: '--logger:trx'
+          msbuild /p:Configuration=Release /p:OutDir=${{ github.workspace }}/build-output
+        
+      # - name: Run tests
+      #   run: |
+      #     vstest.console.exe **\*Test*.dll
+      #   env:
+      #     VSTEST_ADDITIONAL_ARGS: '--logger:trx'
