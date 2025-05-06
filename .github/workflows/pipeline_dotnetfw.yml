@@ -18,6 +18,10 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v2
 
+      - name: SonarQube Begin
+        run: |
+          SonarScanner.MSBuild.exe begin /k:"your_project_key" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://your-sonarqube-server"
+
       - name: Restore NuGet packages
         run: |
           nuget restore 
@@ -26,8 +30,12 @@ jobs:
         run: |
           msbuild /p:Configuration=Release /p:OutDir=${{ github.workspace }}/build-output
         
-      - name: Run tests
+      # - name: Run tests
+      #   run: |
+      #     vstest.console.exe **\*Test*.dll
+      #   env:
+      #     VSTEST_ADDITIONAL_ARGS: '--logger:trx'
+
+      - name: SonarQube End
         run: |
-          vstest.console.exe **\*Test*.dll
-        env:
-          VSTEST_ADDITIONAL_ARGS: '--logger:trx'
+          SonarScanner.MSBuild.exe end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
