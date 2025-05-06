@@ -18,9 +18,10 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v2
 
-      - name: SonarQube Begin
+      - name: Run SonarScanner Begin
+        shell: powershell
         run: |
-          SonarScanner.MSBuild.exe begin /k:"Migracao-NET_dotnet_fw" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"Migracao-NET_dotnet_fw" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
 
       - name: Restore NuGet packages
         run: |
