@@ -20,7 +20,7 @@ jobs:
 
       - name: SonarQube Begin
         run: |
-          SonarScanner.MSBuild.exe begin /k:"your_project_key" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://your-sonarqube-server"
+          SonarScanner.MSBuild.exe begin /k:"Migracao-NET_dotnet_fw" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
 
       - name: Restore NuGet packages
         run: |
