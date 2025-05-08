@@ -22,21 +22,7 @@ jobs:
         uses: NuGet/setup-nuget@v2
 
       - name: Set lower-case org
-        run: echo "ORG_LOWER=$(echo ${{ inputs.org_lower }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-
-      - name: Debug ORG_LOWER
-        run: echo "ORG_LOWER=$ORG_LOWER"
-
-      - name: Official SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v5.2.0
-        env:
-          SONAR_TOKEN: ${{ secrets.TOKEN_SONAR }}
-        with:
-          args: >
-            -Dsonar.organization=${{ env.ORG_LOWER }}
-            -Dsonar.projectKey=${{ github.repository }}
-            -Dsonar.verbose=true
-            -Dsonar.exclusions=**/bin/**/*,**/obj/**/*,**/packages/**/*,**/test/**/*
+        run: echo "ORG_LOWER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Debug ORG_LOWER
         run: echo "ORG_LOWER=$ORG_LOWER"
