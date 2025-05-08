@@ -1,9 +1,16 @@
-name: Pipeline Framework 4.7.2
+name: Reusable Build
 
 on:
-  workflow_call:
-    
-  
+   workflow_call:
+    inputs:
+      dotnet-version:
+        required: true
+        type: string
+      configuration:
+        required: false
+        type: string
+        default: Release
+        
 jobs:
   build:
     runs-on: windows-latest
@@ -17,26 +24,3 @@ jobs:
 
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v2
-
-      - name: Run SonarScanner Begin
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"Migracao-NET_dotnet_fw" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-
-      - name: Restore NuGet packages
-        run: |
-          nuget restore 
-
-      - name: Build solution
-        run: |
-          msbuild /p:Configuration=Release /p:OutDir=${{ github.workspace }}/build-output
-        
-      # - name: Run tests
-      #   run: |
-      #     vstest.console.exe **\*Test*.dll
-      #   env:
-      #     VSTEST_ADDITIONAL_ARGS: '--logger:trx'
-
-      - name: SonarQube End
-        run: |
-          SonarScanner.MSBuild.exe end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
