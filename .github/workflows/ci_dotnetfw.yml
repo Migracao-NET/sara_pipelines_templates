@@ -2,14 +2,6 @@ name: CI .NET Framework
 
 on:
   workflow_call:
-    inputs:
-      dotnet-version:
-        required: true
-        type: string
-      configuration:
-        required: false
-        type: string
-        default: Release
 
 jobs:
   build:
