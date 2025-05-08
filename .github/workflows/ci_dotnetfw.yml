@@ -2,6 +2,10 @@ name: CI .NET Framework
 
 on:
   workflow_call:
+    inputs:
+      org_lower:
+        required: true
+        type: string
 
 jobs:
   build:
@@ -20,6 +24,9 @@ jobs:
       - name: Set lower-case org
         id: org
         run: echo "ORG_LOWER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Debug ORG_LOWER
+        run: echo "ORG_LOWER=$ORG_LOWER"
 
       - name: Official SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5.2.0
