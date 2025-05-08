@@ -7,6 +7,9 @@ on:
         required: true
         type: string
 
+env:
+  ORG_LOWER: ${{ github.repository_owner }}
+  
 jobs:
   build:
     runs-on: windows-latest
